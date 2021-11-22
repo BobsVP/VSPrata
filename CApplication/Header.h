@@ -53,7 +53,7 @@ public:
         int r = 0);
     hasDMA(const char* s, const hasDMA& rs);
     hasDMA(const hasDMA& hs);
-    ~hasDMA();
+    virtual ~hasDMA();
     hasDMA& operator=(const hasDMA& rs);
     virtual void View();
 };
