@@ -1,102 +1,146 @@
 #include "Header.h"
-#include<iostream>
-#include<cstring>
+#include <cstring>
 
-Cd::Cd(const char* s1, const char* s2, int n, double x)
+AbstractDMA::AbstractDMA(const char* l, int r)
 {
-	int tmp = strlen(s1) + 1;
-	performers = new char [tmp];
-	strcpy_s(performers, tmp, s1);
-	tmp = strlen(s2) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, s2);
-	salections = n;
-	playtime = x;
-}
-Cd::Cd(const Cd& d)
-{
-	int tmp = strlen(d.performers) + 1;
-	performers = new char[tmp];
-	strcpy_s(performers, tmp, d.performers);
-	tmp = strlen(d.label) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, d.label);
-	salections = d.salections;
-	playtime = d.playtime;
-}
-Cd::Cd()
-{
-	performers = new char[1];
-	performers[0] = '\0';
-	label = new char[1];
-	label[0] = '\0';
-	salections = 0;
-	playtime = 0.0;
-}
-Cd::~Cd()
-{
-	delete[] performers;
-	delete[] label;
-}
-void Cd::Report() const
-{
-	std::cout << "Performers: " << performers << std::endl;
-	std::cout << "Label: " << label << std::endl;
-	std::cout << "Selections: " << salections << std::endl;
-	std::cout << "Playtime: " << playtime << std::endl;
-}
-Cd& Cd::operator=(const Cd& d)
-{
-	if (this == &d)
-		return *this;
-	delete[] performers;
-	delete[] label;
-	int tmp = strlen(d.performers) + 1;
-	performers = new char[tmp];
-	strcpy_s(performers, tmp, d.performers);
-	tmp = strlen(d.label) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, d.label);
-	salections = d.salections;
-	playtime = d.playtime;
-	return *this;
+    label = new char[std::strlen(l) + 1];
+    strcpy_s(label, std::strlen(l) + 1, l);
+    rating = r;
 }
 
-Classic::Classic()
+AbstractDMA::AbstractDMA(const AbstractDMA& rs)
 {
-	Fayvorits = new char[1];
-	Fayvorits[0] = '\0';
-}
-Classic::Classic(const char* Fa, const char* s1, const char* s2, int n, double x) :Cd(s1, s2, n, x)
-{
-	int tmp = strlen(Fa) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, Fa);
-}
-Classic::Classic(const char* Fa, Cd& cd) : Cd(cd)
-{
-	int tmp = strlen(Fa) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, Fa);
-}
-void Classic::Report() const
-{
-	Cd::Report();
-	std::cout << "Fayvorits: " << Fayvorits << std::endl;
-}
-Classic::~Classic()
-{
-	delete[] Fayvorits;
+    label = new char[std::strlen(rs.label) + 1];
+    strcpy_s(label, std::strlen(rs.label) + 1, rs.label);
+    rating = rs.rating;
 }
 
-Classic& Classic::operator=(const Classic & d)
+//AbstractDMA::AbstractDMA()
+//{
+//    label = new char[1];
+//    label[0] = '\0';
+//    rating = 0;
+//}
+
+AbstractDMA::~AbstractDMA()
 {
-	if (this == &d)
-		return *this;
-	Cd::operator=(d);
-	delete[] Fayvorits;
-	int tmp = strlen(d.Fayvorits) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, d.Fayvorits);
-	return *this;
+    delete[] label;
+}
+
+AbstractDMA& AbstractDMA::operator=(const AbstractDMA& rs)
+{
+    if (this == &rs)
+        return *this;
+    delete[] label;
+    label = new char[std::strlen(rs.label) + 1];
+    strcpy_s(label, std::strlen(rs.label) + 1, rs.label);
+    rating = rs.rating;
+    return *this;
+}
+
+void AbstractDMA::View()
+{
+    std::cout << "Label: " << label << std::endl;
+    std::cout << "Rating: " << rating << std::endl;
+}
+
+
+// baseDMA methods
+baseDMA::baseDMA(const char* l, int r):AbstractDMA(l, r)
+{
+}
+
+baseDMA::baseDMA(const baseDMA& rs) : AbstractDMA(rs)
+{
+}
+
+baseDMA::baseDMA() : AbstractDMA()
+{
+}
+
+baseDMA::~baseDMA()
+{
+}
+
+baseDMA& baseDMA::operator=(const baseDMA& rs)
+{
+    if (this == &rs)
+        return *this;
+    AbstractDMA::operator=(rs);
+    return *this;
+}
+
+void baseDMA::View()
+{
+    AbstractDMA::View();
+}
+
+// lacksDMA methods
+lacksDMA::lacksDMA(const char* c, const char* l, int r)
+    : AbstractDMA(l, r)
+{
+    strncpy_s(color, c, 39);
+    color[39] = '\0';
+}
+
+lacksDMA::lacksDMA(const char* c, const lacksDMA& rs)
+    : AbstractDMA(rs)
+{
+    strncpy_s(color, c, COL_LEN - 1);
+    color[COL_LEN - 1] = '\0';
+}
+
+void lacksDMA::View()
+{
+    AbstractDMA::View();
+    std::cout << "Color: " << color << std::endl;
+}
+
+lacksDMA::~lacksDMA()
+{
+}
+
+
+// hasDMA methods
+hasDMA::hasDMA(const char* s, const char* l, int r)
+    : AbstractDMA(l, r)
+{
+    style = new char[std::strlen(s) + 1];
+    strcpy_s(style, std::strlen(s) + 1, s);
+}
+
+hasDMA::hasDMA(const char* s, const hasDMA& rs)
+    : AbstractDMA(rs)
+{
+    style = new char[std::strlen(s) + 1];
+    strcpy_s(style, std::strlen(s) + 1, s);
+}
+
+hasDMA::hasDMA(const hasDMA& hs)
+    : AbstractDMA(hs)  
+{
+    style = new char[std::strlen(hs.style) + 1];
+    strcpy_s(style, std::strlen(hs.style) + 1, hs.style);
+}
+
+hasDMA::~hasDMA()
+{
+    delete[] style;
+}
+
+hasDMA& hasDMA::operator=(const hasDMA& hs)
+{
+    if (this == &hs)
+        return *this;
+    AbstractDMA::operator=(hs);  
+    delete[] style;         
+    style = new char[std::strlen(hs.style) + 1];
+    strcpy_s(style, std::strlen(hs.style) + 1, hs.style);
+    return *this;
+}
+
+void hasDMA::View()
+{
+    AbstractDMA::View();
+    std::cout << "Style: " << style << std::endl;
 }
