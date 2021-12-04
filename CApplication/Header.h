@@ -6,22 +6,19 @@
 #include<string>
 #include<valarray>
 
-class Student
+class Student :private std::string, private std::valarray<double>
 {
-
 private:
 	typedef std::valarray<double> ArrayDB;
-	std::string name;
-	ArrayDB scores;
 	std::ostream& arr_out(std::ostream& os) const;
 public:
-	Student() : name("Null Student"), scores() {}
-	explicit Student(const std::string& s) : name(s), scores() {}
-	explicit Student(int n) : name("Nully"), scores(n) {}
-	Student(const std::string& s, int n) : name(s), scores(n) {}
-	Student(const std::string& s, ArrayDB& a) : name(s), scores(a) {}
-	Student(const char* str, const double& pd, int n) : name(str), scores(pd, n) {}
-	~Student();
+	Student() : std::string("Null Student"), ArrayDB() {}
+	explicit Student(const std::string& s) : std::string(s), ArrayDB() {}
+	explicit Student(int n) : std::string("Nully"), ArrayDB(n) {}
+	Student(const std::string& s, int n) : std::string(s), ArrayDB(n) {}
+	Student(const std::string& s, ArrayDB& a) : std::string(s), ArrayDB(a) {}
+	Student(const char* str, const double& pd, int n) : std::string(str), ArrayDB(pd, n) {}
+	~Student() {}
 	double Average() const;
 	const std::string& Name() const;
 	double& operator[](int i);
