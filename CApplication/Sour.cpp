@@ -1,33 +1,40 @@
 ﻿#include<iostream>
 #include"Header.h"
-using namespace std;
 
-void Bravo(const Cd& disk);
+using std::cin;
+using std::cout;
+using std::endl;
+
+void set(Student& sa, int n);
+const int puppils = 3;
+const int quizzes = 5;
 
 int main()
 {
-	Cd c1("Batles", "Capitol", 14, 35.5);
-	Classic c2 = Classic("Piano sonata in B flat, Fantasia in C", "Alfred Brendel", "Philips", 2, 57.17);
-	Cd* pcd = &c1;
-	cout << "Using object directly:\n";
-	c1.Report();
-	c2.Report();
-	cout << "\nUsing type cd* pointer to objects:\n";
-	pcd->Report();
-	pcd = &c2;
-	pcd->Report();
-	cout << "\nCalling а function with а Cd reference argument :\n";
-	Bravo(c1);
-	Bravo(c2);
-	cout << "\nTesting assignment:\n";
-	Classic copy;
-	copy = c2;
-	copy.Report();
-
+	Student ada[puppils] = { Student(quizzes), Student(quizzes), Student(quizzes) };
+	int i;
+	for (i = 0; i < puppils; ++i)
+		set(ada[i], quizzes);
+	cout << "\nStudent List: \n";
+	for (i = 0; i < puppils; ++i)
+		cout << ada[i].Name() << endl;
+	cout << "\nResults: ";
+	for (i = 0; i < puppils; ++i)
+	{
+		cout << endl << ada[i];
+		cout << "average: " << ada[i].Average() << endl;
+	}
+	cout << "Done.\n";
 	return 0;
 }
 
-void Bravo(const Cd& disk)
+void set(Student& sa, int n)
 {
-	disk.Report();
+	cout << "Enter the student's name: ";
+	getline(cin, sa);
+	cout << "Please enter " << n << " quiz scores: \n";
+	for (int i = 0; i < n; ++i)
+		cin >> sa[i];
+	while (cin.get() != '\n')
+		continue;
 }

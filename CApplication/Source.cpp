@@ -1,102 +1,68 @@
 #include "Header.h"
-#include<iostream>
-#include<cstring>
 
-Cd::Cd(const char* s1, const char* s2, int n, double x)
+using std::ostream;
+using std::endl;
+using std::istream;
+using std::string;
+
+Student::~Student()
 {
-	int tmp = strlen(s1) + 1;
-	performers = new char [tmp];
-	strcpy_s(performers, tmp, s1);
-	tmp = strlen(s2) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, s2);
-	salections = n;
-	playtime = x;
-}
-Cd::Cd(const Cd& d)
-{
-	int tmp = strlen(d.performers) + 1;
-	performers = new char[tmp];
-	strcpy_s(performers, tmp, d.performers);
-	tmp = strlen(d.label) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, d.label);
-	salections = d.salections;
-	playtime = d.playtime;
-}
-Cd::Cd()
-{
-	performers = new char[1];
-	performers[0] = '\0';
-	label = new char[1];
-	label[0] = '\0';
-	salections = 0;
-	playtime = 0.0;
-}
-Cd::~Cd()
-{
-	delete[] performers;
-	delete[] label;
-}
-void Cd::Report() const
-{
-	std::cout << "Performers: " << performers << std::endl;
-	std::cout << "Label: " << label << std::endl;
-	std::cout << "Selections: " << salections << std::endl;
-	std::cout << "Playtime: " << playtime << std::endl;
-}
-Cd& Cd::operator=(const Cd& d)
-{
-	if (this == &d)
-		return *this;
-	delete[] performers;
-	delete[] label;
-	int tmp = strlen(d.performers) + 1;
-	performers = new char[tmp];
-	strcpy_s(performers, tmp, d.performers);
-	tmp = strlen(d.label) + 1;
-	label = new char[tmp];
-	strcpy_s(label, tmp, d.label);
-	salections = d.salections;
-	playtime = d.playtime;
-	return *this;
 }
 
-Classic::Classic()
+double Student::Average() const
 {
-	Fayvorits = new char[1];
-	Fayvorits[0] = '\0';
+	if (scores.size() > 0)
+		return scores.sum() / scores.size();
+	else
+		return 0;
 }
-Classic::Classic(const char* Fa, const char* s1, const char* s2, int n, double x) :Cd(s1, s2, n, x)
+const std::string& Student::Name() const
 {
-	int tmp = strlen(Fa) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, Fa);
+	return name;
 }
-Classic::Classic(const char* Fa, Cd& cd) : Cd(cd)
+double& Student::operator[](int i)
 {
-	int tmp = strlen(Fa) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, Fa);
+	return scores[i];
 }
-void Classic::Report() const
+double Student::operator[](int i) const
 {
-	Cd::Report();
-	std::cout << "Fayvorits: " << Fayvorits << std::endl;
+	return scores[i];
 }
-Classic::~Classic()
+std::ostream& Student::arr_out(std::ostream& os) const
 {
-	delete[] Fayvorits;
+	int i;
+	int lim = scores.size();
+	if (lim > 0)
+	{
+		for (i = 0; i < lim; ++i)
+		{
+			os << scores[i] << " ";
+			if (i % 5 == 4)
+				os << endl;
+		}
+		if (i % 5 == 0)
+			os << endl;
+	}
+	else
+		os << "empty array ";
+	return os;
 }
 
-Classic& Classic::operator=(const Classic & d)
+//friend
+
+std::istream& operator>>(std::istream& is, Student& stu)
 {
-	if (this == &d)
-		return *this;
-	Cd::operator=(d);
-	delete[] Fayvorits;
-	int tmp = strlen(d.Fayvorits) + 1;
-	Fayvorits = new char[tmp];
-	strcpy_s(Fayvorits, tmp, d.Fayvorits);
-	return *this;
+	is >> stu.name;
+	return is;
+}
+std::istream& getline(std::istream& is, Student& stu)
+{
+	getline(is, stu.name);
+	return is;
+}
+std::ostream& operator<<(std::ostream& os, const Student& stu)
+{
+	os << "Scores for " << stu.name << ":\n";
+	stu.arr_out(os);
+	return os;
 }
