@@ -1,40 +1,23 @@
 ﻿#include<iostream>
 #include"Header.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-
-void set(Student& sa, int n);
-const int puppils = 3;
-const int quizzes = 5;
+const int LIM = 4;
 
 int main()
 {
-	Student ada[puppils] = { Student(quizzes), Student(quizzes), Student(quizzes) };
+	Waiter bob("Bob Apple", 314L, 5);
+	Singer bev("Beverly Hills", 522L, 3);
+	Waiter w_temp;
+	Singer s_temp;
+	Worker* pw[LIM] = {&bob, &bev, &w_temp, &s_temp};
 	int i;
-	for (i = 0; i < puppils; ++i)
-		set(ada[i], quizzes);
-	cout << "\nStudent List: \n";
-	for (i = 0; i < puppils; ++i)
-		cout << ada[i].Name() << endl;
-	cout << "\nResults: ";
-	for (i = 0; i < puppils; ++i)
+	for (i = 2; i < LIM; ++i)
+		pw[i]->Set();
+	for (i = 0; i < LIM; ++i)
 	{
-		cout << endl << ada[i];
-		cout << "average: " << ada[i].Average() << endl;
+		pw[i]->Show();
+		std::cout << std::endl;
 	}
-	cout << "Done.\n";
 	return 0;
 }
 
-void set(Student& sa, int n)
-{
-	cout << "Enter the student's name: ";
-	getline(cin, sa);
-	cout << "Please enter " << n << " quiz scores: \n";
-	for (int i = 0; i < n; ++i)
-		cin >> sa[i];
-	while (cin.get() != '\n')
-		continue;
-}

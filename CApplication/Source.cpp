@@ -1,64 +1,67 @@
 #include "Header.h"
+#include<iostream>
 
-using std::ostream;
+using std::cin;
+using std::cout;
 using std::endl;
-using std::istream;
-using std::string;
 
-double Student::Average() const
+Worker::~Worker(){}
+void Worker::Set()
 {
-	if (ArrayDB::size() > 0)
-		return ArrayDB::sum() / ArrayDB::size();
-	else
-		return 0;
+	cout << "Enter worker's name: ";
+	getline(cin, fullname);
+	cout << "Enter worker's id: ";
+	cin >> id;
+	while (cin.get() != '\n')
+		continue;
 }
-const std::string& Student::Name() const
+void Worker::Show() const
 {
-	return (const string&)*this;
+	cout << "Name: " << fullname << endl;
+	cout << "Employee ID: " << id << endl;
 }
-double& Student::operator[](int i)
+
+//Waiter
+
+void Waiter::Set()
 {
-	return ArrayDB::operator[](i);
+	Worker::Set();
+	cout << "Enter waiter's panache rating: ";
+	cin >> panache;
+	while (cin.get() != '\n')
+		continue;
 }
-double Student::operator[](int i) const
+void Waiter::Show() const
 {
-	return ArrayDB::operator[](i);
+	cout << "Category: waiter\n ";
+	Worker::Show();
+	cout << "Panache rating: " << panache << endl;
 }
-std::ostream& Student::arr_out(std::ostream& os) const
+
+//Singer
+
+const char* Singer::pv[] = { "other", "alto", "contralto", "soprano", "bass", "baritone", "tenor" };
+void Singer::Set()
 {
+	Worker::Set();
+	cout << "Enter number for singer's vocal range: \n";
 	int i;
-	int lim = ArrayDB::size();
-	if (lim > 0)
+	for (i = 0; i < Vtypes; ++i)
 	{
-		for (i = 0; i < lim; ++i)
-		{
-			os << ArrayDB::operator[](i) << " ";
-			if (i % 5 == 4)
-				os << endl;
-		}
-		if (i % 5 == 0)
-			os << endl;
+		cout << i << ": " << pv[i] << " ";
+		if (i % 4 == 3)
+			cout << endl;
 	}
-	else
-		os << "empty array ";
-	return os;
+	if (i % 4 != 0)
+		cout << endl;
+	while (cin >> voice && (voice < 0 || voice > Vtypes))
+		cout << "Please enter a value >= 0 and < " << Vtypes << endl;
+	while (cin.get() != '\n')
+		continue;
 }
-
-//friend
-
-std::istream& operator>>(std::istream& is, Student& stu)
+void Singer::Show() const
 {
-	is >> (string&)stu;
-	return is;
-}
-std::istream& getline(std::istream& is, Student& stu)
-{
-	getline(is, (string&)stu);
-	return is;
-}
-std::ostream& operator<<(std::ostream& os, const Student& stu)
-{
-	os << "Scores for " << (const string&)stu << ":\n";
-	stu.arr_out(os);
-	return os;
+	cout << "Category: singer\n ";
+	Worker::Show();
+	cout << "Vocal range: " << pv[voice] << endl;
 }
