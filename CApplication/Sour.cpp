@@ -1,23 +1,52 @@
-﻿#include<iostream>
-#include"Header.h"
+﻿#include"Header.h"
+#include<iostream>
+#include<cstring>
 
-const int LIM = 4;
+const int SIZE = 5;
 
 int main()
 {
-	Waiter bob("Bob Apple", 314L, 5);
-	Singer bev("Beverly Hills", 522L, 3);
-	Waiter w_temp;
-	Singer s_temp;
-	Worker* pw[LIM] = {&bob, &bev, &w_temp, &s_temp};
-	int i;
-	for (i = 2; i < LIM; ++i)
-		pw[i]->Set();
-	for (i = 0; i < LIM; ++i)
+	using std::cin;
+	using std::cout;
+	using std::endl;
+	using std::strchr;
+	Worker* lolas[SIZE];
+	int ct;
+	for (ct = 0; ct < SIZE; ++ct)
 	{
-		pw[i]->Show();
-		std::cout << std::endl;
+		char choise;
+		cout << "Enter the employee category:\n"
+			<< "w:waiter, s:singer, t:singing waiter, q:quit\n";
+		cin >> choise;
+		while (strchr("wstq", choise) == NULL)
+		{
+			cout << "Please enter a w, s, t or q: ";
+			cin >> choise;
+		}
+		if (choise == 'q')
+			break;
+		switch (choise)
+		{
+		case 'w':lolas[ct] = new Waiter;
+			break;
+		case 's':lolas[ct] = new Singer;
+			break;
+		case 't':lolas[ct] = new SingingWaiter;
+			break;
+		}
+		cin.get();
+		lolas[ct]->Set();
 	}
+	cout << "\nHere is your staff:\n";
+	int i;
+	for (i = 0; i < ct; ++i)
+	{
+		cout << endl;
+		lolas[i]->Show();
+	}
+	for (i = 0; i < ct; ++i)
+		delete lolas[i];
+	cout << "Bye!\n";
 	return 0;
 }
 
