@@ -1,52 +1,52 @@
 ﻿#include"Header.h"
 #include<iostream>
-#include<cstring>
+#include<string>
+#include<cctype>
 
-const int SIZE = 5;
+using std::cin;
+using std::cout;
 
 int main()
 {
-	using std::cin;
-	using std::cout;
-	using std::endl;
-	using std::strchr;
-	Worker* lolas[SIZE];
-	int ct;
-	for (ct = 0; ct < SIZE; ++ct)
+	Stack<std::string> st;
+	char ch;
+	std::string po;
+	cout << "Please enter A to add the purchase order,\n"
+		<< "P to process a PO, or Q to quit.\n";
+	while (cin >> ch && std::toupper(ch) != 'Q')
 	{
-		char choise;
-		cout << "Enter the employee category:\n"
-			<< "w:waiter, s:singer, t:singing waiter, q:quit\n";
-		cin >> choise;
-		while (strchr("wstq", choise) == NULL)
+		while (cin.get() != '\n')
+			continue;
+		if (!std::isalpha(ch))
 		{
-			cout << "Please enter a w, s, t or q: ";
-			cin >> choise;
+			cout << '\a';
+			continue;
 		}
-		if (choise == 'q')
-			break;
-		switch (choise)
+		switch (ch)
 		{
-		case 'w':lolas[ct] = new Waiter;
+		case 'A':
+		case 'a': cout << "Enter a PO number to add: ";
+			cin >> po;
+			if (st.isfull())
+				cout << "Stack already full\n";
+			else
+				st.push(po);
 			break;
-		case 's':lolas[ct] = new Singer;
-			break;
-		case 't':lolas[ct] = new SingingWaiter;
-			break;
+		case 'P':
+		case 'p': 
+			if (st.isempty())
+			cout << "Stack already empty\n";
+			else
+			{
+				st.pop(po);
+				cout << "PO # " << po << " popped\n";
+				break;
+			}
 		}
-		cin.get();
-		lolas[ct]->Set();
+		cout << "Please enter A to add the purchase order,\n"
+			<< "P to process a PO, or Q to quit.\n";
 	}
-	cout << "\nHere is your staff:\n";
-	int i;
-	for (i = 0; i < ct; ++i)
-	{
-		cout << endl;
-		lolas[i]->Show();
-	}
-	for (i = 0; i < ct; ++i)
-		delete lolas[i];
-	cout << "Bye!\n";
+	cout << "Bye.\n";
 	return 0;
 }
 
