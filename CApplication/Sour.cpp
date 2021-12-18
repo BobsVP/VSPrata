@@ -1,52 +1,41 @@
 ﻿#include"Header.h"
 #include<iostream>
-#include<string>
-#include<cctype>
+#include<cstdlib>
+#include<ctime>
 
-using std::cin;
-using std::cout;
+const int NUM = 10;
 
 int main()
 {
-	Stack<std::string> st;
-	char ch;
-	std::string po;
-	cout << "Please enter A to add the purchase order,\n"
-		<< "P to process a PO, or Q to quit.\n";
-	while (cin >> ch && std::toupper(ch) != 'Q')
+	std::srand(std::time(0));
+	std::cout << "Please enter stack size: ";
+	int stacksize;
+	std::cin >> stacksize;
+	Stack<const char*> st(stacksize);
+	const char* in[NUM] = {
+		"1: Hank Gilgamesh", "2: Kiki Ishtar",
+		"3: Betty Rocker", "4: Ian Flagranty",
+		"5: Wolfgang Kibble", "6: Portia Koop",
+		"7: Joy Almondo", "8: Xaverie Paprica",
+		"9: Juan Moor", "10: Misha Mashe"
+	};
+	const char* out[NUM];
+	int processed = 0;
+	int nextin = 0; 
+	while (processed < NUM)
 	{
-		while (cin.get() != '\n')
-			continue;
-		if (!std::isalpha(ch))
-		{
-			cout << '\a';
-			continue;
-		}
-		switch (ch)
-		{
-		case 'A':
-		case 'a': cout << "Enter a PO number to add: ";
-			cin >> po;
-			if (st.isfull())
-				cout << "Stack already full\n";
-			else
-				st.push(po);
-			break;
-		case 'P':
-		case 'p': 
-			if (st.isempty())
-			cout << "Stack already empty\n";
-			else
-			{
-				st.pop(po);
-				cout << "PO # " << po << " popped\n";
-				break;
-			}
-		}
-		cout << "Please enter A to add the purchase order,\n"
-			<< "P to process a PO, or Q to quit.\n";
+		if (st.isempty())
+			st.push(in[nextin++]);
+		else if (st.isfull())
+			st.pop(out[processed++]);
+		else if (std::rand() % 2 && nextin < NUM)
+			st.push(in[nextin++]);
+		else
+			st.pop(out[processed++]);
 	}
-	cout << "Bye.\n";
+	for (int i = 0; i < NUM; i++)
+		std::cout << out[i] << std::endl;
+	std::cout << "Bye!\n";
 	return 0;
 }
 
