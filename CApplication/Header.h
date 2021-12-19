@@ -1,78 +1,50 @@
 #pragma once
 #ifndef Header_h
 #define Header_h
-template<typename Type>
+#include<iostream>
+#include<cstdlib>
 
-class Stack
+template<typename T, int n>
+
+class ArrayTP
 {
 public:
-	explicit Stack(int ss = SIZE);
-	Stack(const Stack& st);
-	~Stack() { delete[] items; }
-	bool isempty() { return top == 0; }
-	bool isfull() { return top == stacksize; }
-	bool push(const Type& item);
-	bool pop(Type& item);
-	Stack& operator=(const Stack& st);
-
+	ArrayTP() {};
+	explicit ArrayTP(const T& v);
+	virtual T& operator[](int i);
+	virtual T operator[](int i) const;
 private:
-	enum { SIZE = 10 };
-	int stacksize;
-	Type* items;
-	int top;
+	T ar[n];
 };
 
-template<typename Type>
-Stack<Type>::Stack(int ss) :stacksize(ss), top(0)
+template<typename T, int n>
+ArrayTP<T, n>::ArrayTP(const T& v)
 {
-	items = new Type[stacksize];
+	for (int i = 0; i < n; ++i)
+		ar[i] = v;
 }
 
-template<typename Type>
-Stack<Type>::Stack(const Stack& st)
+template<typename T, int n>
+T& ArrayTP<T, n>::operator[](int i)
 {
-	stacksize = st.stacksize;
-	top = st.top;
-	items = new Type[stacksize];
-	for (int i = 0; i < top; ++i)
-		items[i] = st.items[i];
-}
-
-template<typename Type>
-bool Stack<Type>::push(const Type& item)
-{
-	if (top < stacksize)
+	if (i < 0 || i >= n)
 	{
-		items[top++] = item;
-		return true;
+		std::cerr << "Error in array limits: " << i
+			<< " is out of range\n";
+		std::exit(EXIT_FAILURE);
 	}
-	else
-		return false;
+	return ar[i];
 }
-template<typename Type>
-bool Stack<Type>::pop(Type& item)
+template<typename T, int n>
+T ArrayTP<T, n>::operator[](int i) const
 {
-	if (top > 0)
+	if (i < 0 || i >= n)
 	{
-		item = items[--top];
-		return true;
+		std::cerr << "Error in array limits: " << i
+			<< " is out of range\n";
+		std::exit(EXIT_FAILURE);
 	}
-	else
-		return false;
-}
-
-template<typename Type>
-Stack<Type>& Stack<Type>::operator=(const Stack<Type>& st)
-{
-	if (this == &st)
-		return *this;
-	delete[] items;
-	stacksize = st.stacksize;
-	top = st.top;
-	items = new Type[stacksize];
-	for (int i = 0; i < top; ++i)
-		items[i] = st.items[i];
-	return *this;
+	return ar[i];
 }
 
 #endif

@@ -1,41 +1,36 @@
 ﻿#include"Header.h"
 #include<iostream>
-#include<cstdlib>
-#include<ctime>
-
-const int NUM = 10;
 
 int main()
 {
-	std::srand(std::time(0));
-	std::cout << "Please enter stack size: ";
-	int stacksize;
-	std::cin >> stacksize;
-	Stack<const char*> st(stacksize);
-	const char* in[NUM] = {
-		"1: Hank Gilgamesh", "2: Kiki Ishtar",
-		"3: Betty Rocker", "4: Ian Flagranty",
-		"5: Wolfgang Kibble", "6: Portia Koop",
-		"7: Joy Almondo", "8: Xaverie Paprica",
-		"9: Juan Moor", "10: Misha Mashe"
-	};
-	const char* out[NUM];
-	int processed = 0;
-	int nextin = 0; 
-	while (processed < NUM)
+	using std::cout;
+	using std::endl;
+	ArrayTP<int, 10> sums;
+	ArrayTP<double, 10> aves;
+	ArrayTP< ArrayTP<int, 5>, 10> twdee;
+	int i, j;
+	for (i = 0; i < 10; i++)
 	{
-		if (st.isempty())
-			st.push(in[nextin++]);
-		else if (st.isfull())
-			st.pop(out[processed++]);
-		else if (std::rand() % 2 && nextin < NUM)
-			st.push(in[nextin++]);
-		else
-			st.pop(out[processed++]);
+		sums[i] = 0;
+		for (j = 0; j < 5; j++)
+		{
+			twdee[i][j] = (i + 1) * (j + 1);
+			sums[i] += twdee[i][j];
+		}
+		aves[i] = (double)sums[i] / 10;
 	}
-	for (int i = 0; i < NUM; i++)
-		std::cout << out[i] << std::endl;
-	std::cout << "Bye!\n";
+	for (i = 0; i < 10; i++)
+	{
+		for (j = 0; j < 5; j++)
+		{
+			cout.width(2);
+			cout << twdee[i][j] << ' ';
+		}
+		cout << " : sum = ";
+		cout.width(3);
+		cout << sums[i] << ", average = " << aves[i] << endl;
+	}
+	cout << "Bye!\n";
 	return 0;
 }
 
