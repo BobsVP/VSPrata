@@ -2,49 +2,33 @@
 #ifndef Header_h
 #define Header_h
 #include<iostream>
-#include<cstdlib>
+#include<string>
 
-template<typename T, int n>
+template<typename T1, typename T2>
 
-class ArrayTP
+class Pairs
 {
 public:
-	ArrayTP() {};
-	explicit ArrayTP(const T& v);
-	virtual T& operator[](int i);
-	virtual T operator[](int i) const;
+	T1& first();
+	T2& second();
+	T1 first() const { return a;}
+	T2& second() const { return b; }
+	Pairs (const T1& aval, const T2& bval) : a(aval), b(bval) {}
+	Pairs (){}
 private:
-	T ar[n];
+	T1 a;
+	T2 b;
 };
 
-template<typename T, int n>
-ArrayTP<T, n>::ArrayTP(const T& v)
+template<typename T1, typename T2>
+T1& Pairs<T1, T2>::first()
 {
-	for (int i = 0; i < n; ++i)
-		ar[i] = v;
+	return a;
 }
-
-template<typename T, int n>
-T& ArrayTP<T, n>::operator[](int i)
+template<typename T1, typename T2>
+T2& Pairs<T1, T2>::second()
 {
-	if (i < 0 || i >= n)
-	{
-		std::cerr << "Error in array limits: " << i
-			<< " is out of range\n";
-		std::exit(EXIT_FAILURE);
-	}
-	return ar[i];
-}
-template<typename T, int n>
-T ArrayTP<T, n>::operator[](int i) const
-{
-	if (i < 0 || i >= n)
-	{
-		std::cerr << "Error in array limits: " << i
-			<< " is out of range\n";
-		std::exit(EXIT_FAILURE);
-	}
-	return ar[i];
+	return b;
 }
 
 #endif

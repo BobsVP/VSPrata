@@ -1,36 +1,27 @@
 ﻿#include"Header.h"
 #include<iostream>
+#include<string>
 
 int main()
 {
 	using std::cout;
 	using std::endl;
-	ArrayTP<int, 10> sums;
-	ArrayTP<double, 10> aves;
-	ArrayTP< ArrayTP<int, 5>, 10> twdee;
-	int i, j;
-	for (i = 0; i < 10; i++)
+	using std::string;
+	Pairs<string, int> ratings[4] =
 	{
-		sums[i] = 0;
-		for (j = 0; j < 5; j++)
-		{
-			twdee[i][j] = (i + 1) * (j + 1);
-			sums[i] += twdee[i][j];
-		}
-		aves[i] = (double)sums[i] / 10;
-	}
-	for (i = 0; i < 10; i++)
-	{
-		for (j = 0; j < 5; j++)
-		{
-			cout.width(2);
-			cout << twdee[i][j] << ' ';
-		}
-		cout << " : sum = ";
-		cout.width(3);
-		cout << sums[i] << ", average = " << aves[i] << endl;
-	}
-	cout << "Bye!\n";
+		Pairs<string, int>("The Purpled Duck", 5),
+		Pairs<string, int>("Jaquie's Frisko Al Fresco", 4),
+		Pairs<string, int>("Caffe Soufle", 5),
+		Pairs<string, int>("Bertie's Eats", 3)
+	};
+	int joints = sizeof(ratings) / sizeof(Pairs<string, int>);
+	cout << "Rating:\t Eatery\n";
+	for (int i = 0; i < joints; i++)
+		cout << ratings[i].second() << ":\t" << ratings[i].first() << endl;
+	cout << "Oops! Revised rating:\n";
+	ratings[3].first() = "Bertie's Fab Eats";
+	ratings[3].second() = 6;
+	cout << ratings[3].second() << ":\t" << ratings[3].first() << endl;
 	return 0;
 }
 
