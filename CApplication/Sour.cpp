@@ -1,27 +1,19 @@
 ﻿#include"Header.h"
 #include<iostream>
-#include<string>
+//using std::cout;
+//using std::endl;
 
 int main()
 {
-	using std::cout;
-	using std::endl;
-	using std::string;
-	Pairs<string, int> ratings[4] =
-	{
-		Pairs<string, int>("The Purpled Duck", 5),
-		Pairs<string, int>("Jaquie's Frisko Al Fresco", 4),
-		Pairs<string, int>("Caffe Soufle", 5),
-		Pairs<string, int>("Bertie's Eats", 3)
-	};
-	int joints = sizeof(ratings) / sizeof(Pairs<string, int>);
-	cout << "Rating:\t Eatery\n";
-	for (int i = 0; i < joints; i++)
-		cout << ratings[i].second() << ":\t" << ratings[i].first() << endl;
-	cout << "Oops! Revised rating:\n";
-	ratings[3].first() = "Bertie's Fab Eats";
-	ratings[3].second() = 6;
-	cout << ratings[3].second() << ":\t" << ratings[3].first() << endl;
+	beta<double> guy(3.5, 3);
+	cout << "T was set to double\n";
+	guy.Show();
+	cout << "V was set to T, which is double, then V was set to int\n";
+	cout << guy.blab(10, 2.3) << endl;
+	cout << "U was set to int\n";
+	cout << guy.blab(10.0, 2.3) << endl;
+	cout << "U was set to double\n";
+	cout << "Done.\n";
 	return 0;
 }
 
