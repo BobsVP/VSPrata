@@ -2,33 +2,19 @@
 #ifndef Header_h
 #define Header_h
 #include<iostream>
-using std::cout;
-using std::endl;
+#include"f:\Фильмы\Язык программирования C++\Стивен Прата - Язык программирования C++\Examples\Chapter 14\stacktp.h"
 
+template<template<typename T> typename Thing>
 
-template<typename T>
-
-class beta
+class Grab
 {
 private:
-	template<typename V>
-	class hold
-	{
-	private:
-		V val;
-	public:
-		hold(V v = 0) : val(v){}
-		void show() const { cout << val << endl; }
-		V Value() const { return val; }
-	};
-	hold<T> q;
-	hold<int> n;
-
+	Thing<int> s1;
+	Thing<double> s2;
 public:
-	beta(T t, int i) : q(t), n(i) { }
-	template<typename U>
-	U blab(U u, T t) { return (n.Value() + q.Value()) * u / t; }
-	void Show() const { q.show(); n.show(); }
+	Grab() {};
+	bool push(int a, double x) { return s1.push(a) && s2.push(x); }
+	bool pop(int& a, double& x) { return s1.pop(a) && s2.pop(x); }
 };
 
 

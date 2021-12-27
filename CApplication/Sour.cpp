@@ -1,18 +1,24 @@
 ﻿#include"Header.h"
 #include<iostream>
-//using std::cout;
-//using std::endl;
+using std::cout;
+using std::cin;
+using std::endl;
 
 int main()
 {
-	beta<double> guy(3.5, 3);
-	cout << "T was set to double\n";
-	guy.Show();
-	cout << "V was set to T, which is double, then V was set to int\n";
-	cout << guy.blab(10, 2.3) << endl;
-	cout << "U was set to int\n";
-	cout << guy.blab(10.0, 2.3) << endl;
-	cout << "U was set to double\n";
+	Grab<Stack> nebula;
+	int ni;
+	double nb;
+	cout << "Enter int double pairs, such as 4 3.5 (0 0 to end):\n";
+	while (cin >> ni >> nb && ni > 0 && nb > 0)
+	{
+		if (!nebula.push(ni, nb))
+			break;
+	}
+	while (nebula.pop(ni, nb))
+	{
+		cout << ni << ", " << nb << '\n';
+	}
 	cout << "Done.\n";
 	return 0;
 }
