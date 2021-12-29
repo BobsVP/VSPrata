@@ -6,20 +6,20 @@ using std::endl;
 
 int main()
 {
-	Grab<Stack> nebula;
-	int ni;
-	double nb;
-	cout << "Enter int double pairs, such as 4 3.5 (0 0 to end):\n";
-	while (cin >> ni >> nb && ni > 0 && nb > 0)
-	{
-		if (!nebula.push(ni, nb))
-			break;
-	}
-	while (nebula.pop(ni, nb))
-	{
-		cout << ni << ", " << nb << '\n';
-	}
-	cout << "Done.\n";
+	cout << "No objects declarated: ";
+	counts();
+	HasFriend<int> hfi1(10);
+	cout << "After hfi1 declarated: ";
+	counts();
+	HasFriend<int> hfi2(20);
+	cout << "After hfi2 declarated: ";
+	counts();
+	HasFriend<double> hfdb(10.5);
+	cout << "After hfdb declarated: ";
+	counts();
+	Reports(hfi1);
+	Reports(hfi2);
+	Reports(hfdb);
 	return 0;
 }
 
