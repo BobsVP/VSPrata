@@ -6,36 +6,18 @@ using std::cout;
 using std::endl;
 
 template<typename T>
-
-class HasFriend
+class ManyFriendT
 {
 private:
 	T item;
-	static int st;
 public:
-	HasFriend(const T& i) :item(i) { st++; }
-	~HasFriend() { st--; }
-	friend void counts();
-	friend void Reports(HasFriend<T>&);
+	ManyFriendT(const T& i) :item(i) { }
+	template<typename C, typename D> friend void show2(C&, D&);
 };
 
-template<typename T>
-int HasFriend<T>::st = 0;
-
-void counts()
+template<typename C, typename D> void show2(C& c, D& d)
 {
-	cout << "int count: " << HasFriend<int>::st << "; ";
-	cout << "double count: " << HasFriend<double>::st << "\n";
-}
-
-void Reports(HasFriend<int>& hf)
-{
-	cout << "HasFriend<int>: " << hf.item << endl;
-}
-
-void Reports(HasFriend<double>& hf)
-{
-	cout << "HasFriend<double>: " << hf.item << endl;
+	cout << c.item << ", " << d.item << endl;
 }
 
 

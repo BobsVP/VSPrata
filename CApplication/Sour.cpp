@@ -6,20 +6,13 @@ using std::endl;
 
 int main()
 {
-	cout << "No objects declarated: ";
-	counts();
-	HasFriend<int> hfi1(10);
-	cout << "After hfi1 declarated: ";
-	counts();
-	HasFriend<int> hfi2(20);
-	cout << "After hfi2 declarated: ";
-	counts();
-	HasFriend<double> hfdb(10.5);
-	cout << "After hfdb declarated: ";
-	counts();
-	Reports(hfi1);
-	Reports(hfi2);
-	Reports(hfdb);
+	ManyFriendT<int> hfi1(10);
+	ManyFriendT<int> hfi2(20);
+	ManyFriendT<double> hfdb(10.5);
+	cout << "hfi1, hfi2:\n";
+	show2(hfi1, hfi2);
+	cout << "hfdb, hfi2:\n";
+	show2(hfdb, hfi2);
 	return 0;
 }
 
