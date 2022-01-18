@@ -6,13 +6,23 @@ using std::endl;
 
 int main()
 {
-	ManyFriendT<int> hfi1(10);
-	ManyFriendT<int> hfi2(20);
-	ManyFriendT<double> hfdb(10.5);
-	cout << "hfi1, hfi2:\n";
-	show2(hfi1, hfi2);
-	cout << "hfdb, hfi2:\n";
-	show2(hfdb, hfi2);
+	cout << "Enter name of wine: ";
+	char lab[50];
+	cin.getline(lab, 50);
+	cout << "Enter numbers of years: ";
+	int yrs;
+	cin >> yrs;
+	Wine holding(lab, yrs);
+	holding.GetBottles();
+	holding.Show();
+	const int YRS = 3;
+	int y[YRS] = { 1993, 1995, 1998 };
+	int b[YRS] = { 48, 60, 72 };
+	Wine more("Gushing Grape Red", YRS, y, b);
+	more.Show();
+	cout << "Total bottles for " << more.Label()
+		<< ": " << more.sum() << endl;
+	cout << "Bye.\n";
 	return 0;
 }
 
