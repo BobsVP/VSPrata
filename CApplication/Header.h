@@ -53,10 +53,8 @@ public:
 };
 
 Wine::Wine(const char* l, int y, const int yr[], const int bot[]) :
-    label(l), ColYear(y)
+    label(l), ColYear(y), YearCount(ArraiInt(y), ArraiInt(y))
 {
-    ArraiInt z(y);
-     YearCount = PairArray(z, z);
    for (int i = 0; i < ColYear; ++i)
     {
        YearCount.first()[i] = yr[i];
@@ -64,10 +62,8 @@ Wine::Wine(const char* l, int y, const int yr[], const int bot[]) :
    }
 
 }
-Wine::Wine(const char* l, int y):label(l), ColYear(y)
+Wine::Wine(const char* l, int y):label(l), ColYear(y), YearCount(ArraiInt(y), ArraiInt(y))
 {
-    ArraiInt z(y);
-    YearCount = Pair<ArraiInt, ArraiInt>(z, z);
 }
 void Wine::GetBottles()
 {
