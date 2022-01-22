@@ -36,11 +36,10 @@ T2& Pair<T1, T2>::second()
 using ArraiInt = std::valarray<int>;
 using PairArray = Pair<ArraiInt, ArraiInt>;
 
-class Wine :private std::valarray<int>, std::string
+class Wine :private PairArray, std::string
 {
 private:
     int ColYear;
-    PairArray YearCount;
 public:
     Wine(const char* l, int y, const int yr[], const int bot[]);
     Wine(const char* l, int y);
@@ -52,16 +51,16 @@ public:
 };
 
 Wine::Wine(const char* l, int y, const int yr[], const int bot[]) :
-    std::string(l), ColYear(y), YearCount(ArraiInt(y), ArraiInt(y))
+    std::string(l), ColYear(y), PairArray(ArraiInt(y), ArraiInt(y))
 {
    for (int i = 0; i < ColYear; ++i)
     {
-       YearCount.first()[i] = yr[i];
-       YearCount.second()[i] = bot[i];
+       PairArray::first()[i] = yr[i];
+       PairArray::second()[i] = bot[i];
    }
 
 }
-Wine::Wine(const char* l, int y):std::string(l), ColYear(y), YearCount(ArraiInt(y), ArraiInt(y))
+Wine::Wine(const char* l, int y):std::string(l), ColYear(y), PairArray(ArraiInt(y), ArraiInt(y))
 {
 }
 void Wine::GetBottles()
@@ -71,10 +70,10 @@ void Wine::GetBottles()
         std::cout << "Enter year: ";
         int ttmp;
         std::cin >> ttmp;
-        YearCount.first()[i] = ttmp;
+        PairArray::first()[i] = ttmp;
         std::cout << "Enter bottles for that year: ";
         std::cin >> ttmp;
-        YearCount.second()[i] = ttmp;
+        PairArray::second()[i] = ttmp;
     }
 }
 void Wine::Show() const
@@ -83,12 +82,12 @@ void Wine::Show() const
     std::cout << "\tYear" << "\tBottles" << endl;;
     for (int i = 0; i < ColYear; ++i)
     {
-        std::cout << "\t" << YearCount.first()[i] << "\t" << YearCount.second()[i] << endl;;
+        std::cout << "\t" << PairArray::first()[i] << "\t" << PairArray::second()[i] << endl;;
     }
 }
 int const Wine::sum()
 {
-    return YearCount.second().sum();
+    return PairArray::second().sum();
 }
 
 
