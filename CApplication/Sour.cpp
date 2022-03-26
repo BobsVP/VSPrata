@@ -1,18 +1,35 @@
-﻿#include"Header.h"
-#include<iostream>
-using std::cout;
-using std::cin;
-using std::endl;
-
+﻿#include <iostream>
+#include "Header.h"
 int main()
 {
-	ManyFriendT<int> hfi1(10);
-	ManyFriendT<int> hfi2(20);
-	ManyFriendT<double> hfdb(10.5);
-	cout << "hfi1, hfi2:\n";
-	show2(hfi1, hfi2);
-	cout << "hfdb, hfi2:\n";
-	show2(hfdb, hfi2);
-	return 0;
-}
+    using std::cout;
+    Tv s42;
+    cout << "Initial settings for 42\" TV:\n";
+    s42.settings();
+    s42.onoff();
+    s42.chanup();
+    cout << "\nAdjusted settings for 42\" TV:\n";
+    s42.settings();
 
+    Remote grey;
+
+    grey.set_chan(s42, 10);
+    grey.volup(s42);
+    grey.volup(s42);
+    cout << "\n42\" settings after using remote:\n";
+    s42.RemoteRegim(grey);
+    grey.ShowRegime();
+    s42.settings();
+    s42.onoff();
+    s42.RemoteRegim(grey);
+    grey.ShowRegime();
+
+    Tv s58(Tv::On);
+    s58.set_mode();
+    grey.set_chan(s58, 28);
+    s58.RemoteRegim(grey);
+    cout << "\n58\" settings:\n";
+    s58.settings();
+    grey.ShowRegime();
+    return 0;
+}
