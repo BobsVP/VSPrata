@@ -24,20 +24,11 @@ int main()
                 << " is " << gmean(x, y) << endl;
             cout << "Enter next set of numbers <q to quit>: ";
         }
-        catch (bad_hmean& bg)    
+        catch (BaseLogic& bg)
         {
-            cout << bg.what() << endl;
-            cout << "Try again.\n";
-            continue;
-        }
-        catch (bad_gmean& hg)
-        {
-            cout << hg.what() << endl;
-            //cout << "Values used: " << hg.v1 << ", "
-            //    << hg.v2 << endl;
-            cout << "Sorry, you don't get to play any more.\n";
+            bg.GetData();
             break;
-        } 
+        }
     }
     cout << "Bye!\n";
     return 0;
@@ -46,13 +37,13 @@ int main()
 double hmean(double a, double b)
 {
     if (a == -b)
-        throw bad_hmean ("hmean(), invalid argument");
+        throw bad_hmean ("hmean(), invalid argument", a, b);
     return 2.0 * a * b / (a + b);
 }
 
 double gmean(double a, double b)
 {
     if (a < 0 || b < 0)
-        throw bad_gmean("gmean() arguments should be >= 0");
+        throw bad_gmean("gmean() arguments should be >= 0", a, b);
     return std::sqrt(a * b);
 }

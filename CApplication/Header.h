@@ -5,37 +5,50 @@
 #include <iostream>
 #include <stdexcept> 
 
-class bad_hmean : public std::logic_error
+class BaseLogic : public std::logic_error
+{
+public:
+    BaseLogic(const char* s, double first, double second);
+    virtual void GetData() const {}
+	virtual ~BaseLogic();
+
+protected:
+    double v1;
+    double v2;
+};
+
+BaseLogic::BaseLogic(const char* s, double first, double second) : std::logic_error(s), v1(first), v2(second)
+{
+}
+
+BaseLogic::~BaseLogic()
+{
+}
+
+class bad_hmean : public BaseLogic
 {
 private:
-    //double v1;
-    //double v2;
 public:
-    bad_hmean(const char* s) : std::logic_error(s) {}
-    //bad_hmean(double a = 0, double b = 0) : v1(a), v2(b) {}
-    //void mesg();
+    bad_hmean(const char* s, double first, double second) : BaseLogic(s, first, second) {}
+    virtual void GetData() const;
 };
 
-//inline void bad_hmean::mesg()
-//{
-//    std::cout << "hmean(" << v1 << ", " << v2 << "): "
-//        << "invalid arguments: a = -b\n";
-//}
+void bad_hmean::GetData() const
+{
+    std::cout << this->what() << ", argument #1: " << this->v1 << ", argument #2: " << this->v2 << std::endl;
+}
 
-class bad_gmean : public std::logic_error
+class bad_gmean : public BaseLogic
 {
 public:
-    //double v1;
-    //double v2;
-    bad_gmean(const char* s) : std::logic_error(s) {}
-    //bad_gmean(double a = 0, double b = 0) : v1(a), v2(b) {}
-    //const char* mesg();
+    bad_gmean(const char* s, double first, double second) : BaseLogic(s, first, second) {}
+    virtual void GetData() const;
 };
 
-//inline const char* bad_gmean::mesg()
-//{
-//    return "gmean() arguments should be >= 0\n";
-//}
+void bad_gmean::GetData() const
+{
+    std::cout << this->what() << ", argument #1: " << this->v1 << ", argument #2: " << this->v2 << std::endl;
+}
 
 
 #endif
