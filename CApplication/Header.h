@@ -2,53 +2,55 @@
 #ifndef Header_h
 #define Header_h
 
-#include <iostream>
-#include <stdexcept> 
+#include <stdexcept>
+#include <string>
 
-class BaseLogic : public std::logic_error
+class Sales
 {
 public:
-    BaseLogic(const char* s, double first, double second);
-    virtual void GetData() const {}
-	virtual ~BaseLogic();
-
-protected:
-    double v1;
-    double v2;
-};
-
-BaseLogic::BaseLogic(const char* s, double first, double second) : std::logic_error(s), v1(first), v2(second)
-{
-}
-
-BaseLogic::~BaseLogic()
-{
-}
-
-class bad_hmean : public BaseLogic
-{
+    enum { MONTHS = 12 };   
+    class bad_index : public std::logic_error
+    {
+    private:
+        int bi;  
+    public:
+        explicit bad_index(int ix,
+            const std::string& s = "Index error in Sales object\n");
+        int bi_val() const { return bi; }
+        virtual ~bad_index() {}
+    };
+    explicit Sales(int yy = 0);
+    Sales(int yy, const double* gr, int n);
+    virtual ~Sales() { }
+    int Year() const { return year; }
+    virtual double operator[](int i) const;
+    virtual double& operator[](int i);
 private:
-public:
-    bad_hmean(const char* s, double first, double second) : BaseLogic(s, first, second) {}
-    virtual void GetData() const;
+    double gross[MONTHS];
+    int year;
 };
 
-void bad_hmean::GetData() const
-{
-    std::cout << this->what() << ", argument #1: " << this->v1 << ", argument #2: " << this->v2 << std::endl;
-}
-
-class bad_gmean : public BaseLogic
+class LabeledSales : public Sales
 {
 public:
-    bad_gmean(const char* s, double first, double second) : BaseLogic(s, first, second) {}
-    virtual void GetData() const;
+    class nbad_index : public Sales::bad_index
+    {
+    private:
+        std::string lbl;
+    public:
+        nbad_index(const std::string& lb, int ix,
+            const std::string& s = "Index error in LabeledSales object\n");
+        const std::string& label_val() const { return lbl; }
+        virtual ~nbad_index() {}
+    };
+    explicit LabeledSales(const std::string& lb = "none", int yy = 0);
+    LabeledSales(const std::string& lb, int yy, const double* gr, int n);
+    virtual ~LabeledSales() { }
+    const std::string& Label() const { return label; }
+    virtual double operator[](int i) const;
+    virtual double& operator[](int i);
+private:
+    std::string label;
 };
-
-void bad_gmean::GetData() const
-{
-    std::cout << this->what() << ", argument #1: " << this->v1 << ", argument #2: " << this->v2 << std::endl;
-}
-
 
 #endif
