@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <string> 
+#include <cctype> 
 
 bool Bool(std::string& str);
 
@@ -17,8 +18,12 @@ int main()
 
 bool Bool(std::string& str)
 {
-    for (int i = 0; i < str.size(); ++i)
-        if (str[i] != str[str.size() - i - 1])
+    std::string tmp("");
+    for (auto c : str)
+        if (isalpha(c))
+            tmp = tmp + (char)tolower(c);
+    for (int i = 0; i < tmp.size(); ++i)
+        if (tmp[i] != tmp[tmp.size() - i - 1])
             return false;
     return true;
 }
