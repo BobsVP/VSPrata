@@ -1,34 +1,40 @@
-﻿#include <iostream>
-#include<set>
-#include<string>
+﻿#include<iostream>
+#include<ctime>
+#include<vector>
+#include<list>
 #include<algorithm>
+#include<cstdlib>
 
-void GetList(const char* Imya, std::set<std::string>& List);
-void display(const std::string& s);
+void generate_rand(int& t);
 
 int main()
 {
-    std::set<std::string> MattList, PetList, UnionList;
-    GetList("Matt", MattList);
-    std::cout << "Matt's friend list:\n";
-    std::for_each(MattList.begin(), MattList.end(), display);
-    GetList("Patt", PetList);
-    std::cout << "Patt's friend list:\n";
-    std::for_each(PetList.begin(), PetList.end(), display);
-    std::set_union(MattList.begin(), MattList.end(), PetList.begin(), PetList.end(), std::insert_iterator<std::set<std::string>>(UnionList, UnionList.begin()));
-    std::cout << "Union list: \n";
-    std::for_each(UnionList.begin(), UnionList.end(), display);
+    srand(time(NULL));
+    std::vector<int> vi0(10000000);
+    std::for_each(vi0.begin(), vi0.end(), generate_rand);
+    std::vector<int> vi(vi0);
+    std::list<int> li(vi0.begin(), vi0.end());
+    clock_t start = clock();
+    std::sort(vi.begin(), vi.end());
+    clock_t end = clock();
+    std::cout << (double)(end - start) / CLOCKS_PER_SEC << std::endl;
+    start = clock();
+    li.sort();
+    end = clock();
+    std::cout << (double)(end - start) / CLOCKS_PER_SEC << std::endl;
+    li.clear();
+    std::copy(vi0.begin(), vi0.end(), std::back_inserter(li));
+    start = clock();
+    std::copy(li.begin(), li.end(), vi.begin());
+    std::sort(vi.begin(), vi.end());
+    li.clear();
+    std::copy(vi.begin(), vi.end(), std::back_inserter(li));
+    end = clock();
+    std::cout << (double)(end - start) / CLOCKS_PER_SEC << std::endl;
     return 0;
 }
 
-void GetList(const char* Imya, std::set<std::string>& List)
+void generate_rand(int& t)
 {
-    std::cout << "Enter " << Imya << " list (quit to quit):\n";
-    std::string letters;
-    while (std::cin >> letters && letters != "quit")
-        List.insert(letters);
-}
-void display(const std::string& s)
-{
-    std::cout << s << std::endl;
+    t = rand();
 }
