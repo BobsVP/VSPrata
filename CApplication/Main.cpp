@@ -1,27 +1,34 @@
 ﻿#include <iostream>
-#include<vector>
+#include<set>
+#include<string>
 #include<algorithm>
-#include<cstdlib>
-#include<ctime>
 
-std::vector<int> Lotto(int loto_n, int loto_s);
+void GetList(const char* Imya, std::set<std::string>& List);
+void display(const std::string& s);
 
 int main()
 {
-    std::srand(time(0));
-    std::vector<int> winners;
-    winners = Lotto(51, 6);
-    for (auto var : winners)
-        std::cout << var << "\n";
+    std::set<std::string> MattList, PetList, UnionList;
+    GetList("Matt", MattList);
+    std::cout << "Matt's friend list:\n";
+    std::for_each(MattList.begin(), MattList.end(), display);
+    GetList("Patt", PetList);
+    std::cout << "Patt's friend list:\n";
+    std::for_each(PetList.begin(), PetList.end(), display);
+    std::set_union(MattList.begin(), MattList.end(), PetList.begin(), PetList.end(), std::insert_iterator<std::set<std::string>>(UnionList, UnionList.begin()));
+    std::cout << "Union list: \n";
+    std::for_each(UnionList.begin(), UnionList.end(), display);
     return 0;
 }
 
-std::vector<int> Lotto(int loto_n, int loto_s)
+void GetList(const char* Imya, std::set<std::string>& List)
 {
-    std::vector<int> collector;
-    for (int i = 1; i <= loto_n; ++i)
-        collector.push_back(i);
-    std::random_shuffle(collector.begin(), collector.end());
-    collector.resize(loto_s);
-    return collector;
+    std::cout << "Enter " << Imya << " list (quit to quit):\n";
+    std::string letters;
+    while (std::cin >> letters && letters != "quit")
+        List.insert(letters);
+}
+void display(const std::string& s)
+{
+    std::cout << s << std::endl;
 }
