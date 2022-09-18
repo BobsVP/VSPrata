@@ -19,8 +19,8 @@ int main()
 			break;
 	}
 	char ch;
-	cin.get(ch);
-	cout << "You entered the " << count << " of characters" << endl << ch;
+	//cin.get(ch);
+	cout << "You entered the " << count << " of characters" << endl;
 	return 0;
 }
 
