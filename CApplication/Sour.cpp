@@ -1,18 +1,20 @@
-﻿#include"Header.h"
+﻿//#include"Header.h"
 #include<iostream>
+#include<fstream>
 using std::cout;
 using std::cin;
 using std::endl;
 
-int main()
+int main(int argc, char * argv[])
 {
-	ManyFriendT<int> hfi1(10);
-	ManyFriendT<int> hfi2(20);
-	ManyFriendT<double> hfdb(10.5);
-	cout << "hfi1, hfi2:\n";
-	show2(hfi1, hfi2);
-	cout << "hfdb, hfi2:\n";
-	show2(hfdb, hfi2);
+	std::ofstream Fout(argv[1]);
+	cout << "Enter a string to write in file:" << endl;
+	char ch;
+	while (cin.get(ch))
+	{
+		Fout << ch;
+	}
+	Fout.close();
 	return 0;
 }
 
