@@ -364,3 +364,4 @@ FodyWeavers.xsd
 CApplication/Sour
 .vscode/tasks.json
 .gitignore
+*.txt

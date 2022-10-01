@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
 	std::ofstream Fout(argv[1]);
 	cout << "Enter a string to write in file:" << endl;
 	char ch;
-	while (cin.get(ch))
+	while (cin.get(ch) && ch != 4)
 	{
 		Fout << ch;
 	}
