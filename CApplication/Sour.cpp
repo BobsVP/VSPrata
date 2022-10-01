@@ -7,14 +7,33 @@ using std::endl;
 
 int main(int argc, char * argv[])
 {
-	std::ofstream Fout(argv[1]);
-	cout << "Enter a string to write in file:" << endl;
-	char ch;
-	while (cin.get(ch) && ch != 4)
+	if (argc < 3)
 	{
-		Fout << ch;
+		std::cerr << "Too few command line options found. Execution terminated." << std::endl;
+		std::cin.get(); 
+		exit(EXIT_FAILURE);
 	}
-	Fout.close();
+	std::ifstream File1(argv[1]);
+	if (!File1.is_open())
+	{
+		std::cerr << "\nCould not open input file. Execution terminated." << std::endl;
+		std::cin.get();
+		exit(EXIT_FAILURE);
+	}
+	std::ofstream File2(argv[2]);
+	if (!File2.is_open())
+	{
+		std::cerr << "\nCould not open output file. Execution terminated." << std::endl;
+		std::cin.get();
+		exit(EXIT_FAILURE);
+	}
+	char ch;
+	while (File1.get(ch))
+	{
+		File2 << ch;
+	}
+	File1.close();
+	File2.close();
 	return 0;
 }
 
