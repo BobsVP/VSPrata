@@ -127,6 +127,7 @@ int main(int argc, char * argv[])
 						TypeEntry = 6;
 					FileData << TypeEntry << endl;
 					pc[i]->WriteAll(FileData);
+					delete pc[i];
 				}
 			}
 			FileData.close();
