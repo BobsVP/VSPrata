@@ -1,18 +1,28 @@
-﻿#include"Header.h"
-#include<iostream>
-using std::cout;
-using std::cin;
-using std::endl;
+﻿#include<iostream>
+#include<initializer_list>
+
+template<typename T>
+auto average_list(std::initializer_list<T> args)
+{
+	return args;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, std::initializer_list<T> args)
+{
+	for (auto i = args.begin(); i != args.end(); ++i)
+		os << *i << std::endl;
+	return os;
+}
 
 int main()
 {
-	ManyFriendT<int> hfi1(10);
-	ManyFriendT<int> hfi2(20);
-	ManyFriendT<double> hfdb(10.5);
-	cout << "hfi1, hfi2:\n";
-	show2(hfi1, hfi2);
-	cout << "hfdb, hfi2:\n";
-	show2(hfdb, hfi2);
+	using namespace std;
+	auto q = average_list({ 15.4, 10.7, 9.0 });
+	cout << q << endl;
+	cout << average_list({ 20, 30, 19, 17, 45, 38 }) << endl;
+	auto ad = average_list<double>({ 'A', 70, 65.33 });
+	cout << ad << endl;
 	return 0;
 }
 
