@@ -4,15 +4,10 @@
 template<typename T>
 auto average_list(std::initializer_list<T> args)
 {
-	return args;
-}
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os, std::initializer_list<T> args)
-{
+	T temp = 0;
 	for (auto i = args.begin(); i != args.end(); ++i)
-		os << *i << std::endl;
-	return os;
+		temp += *i;
+	return temp / args.size();
 }
 
 int main()
