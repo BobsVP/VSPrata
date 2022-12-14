@@ -1,23 +1,21 @@
 ﻿#include<iostream>
-#include<initializer_list>
-
-template<typename T>
-auto average_list(std::initializer_list<T> args)
-{
-	T temp = 0;
-	for (auto i = args.begin(); i != args.end(); ++i)
-		temp += *i;
-	return temp / args.size();
-}
+#include<string>
+#include"Header.h"
 
 int main()
 {
-	using namespace std;
-	auto q = average_list({ 15.4, 10.7, 9.0 });
-	cout << q << endl;
-	cout << average_list({ 20, 30, 19, 17, 45, 38 }) << endl;
-	auto ad = average_list<double>({ 'A', 70, 65.33 });
-	cout << ad << endl;
+	Cpmv obj0;
+	Cpmv obj1("Hello ", "Good ");
+	obj1.Display();
+	Cpmv obj2(obj1);
+	obj2.Display();
+	Cpmv obj3(obj0 + Cpmv{"World", "Morning"});
+	obj0 = obj1;
+	obj0.Display();
+	obj2 = obj0 + obj3;
+	obj2.Display();
+	obj2 += Cpmv{ ",", "." };
+	obj2.Display();
 	return 0;
 }
 
