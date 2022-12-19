@@ -23,7 +23,7 @@ int main()
 {
 	std::cout << sum_values() << std::endl;
 	std::cout << sum_values(1) << std::endl;
-	std::cout << sum_values(0, 2, 41.41, '\t', '\n', 10.98, 14) << std::endl;
+	std::cout << sum_values(0, 2, 41.41, '\t', '\n', 10.98, 14, 'Q') << std::endl;
 	return 0;
 }
 
