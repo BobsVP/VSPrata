@@ -1,21 +1,27 @@
 ﻿#include<iostream>
-#include<string>
-#include"Header.h"
+
+long double sum_values()
+{
+	return 0;
+}
+
+template<typename T>
+long double sum_values(T value)
+{
+	static_cast<long double>(value);
+	return value;
+}
+
+template<typename T, typename ... Args>
+long double sum_values(T value, Args...arg)
+{
+	static_cast<long double>(value);
+	return value + sum_values(arg...);
+}
 
 int main()
 {
-	Cpmv obj0;
-	Cpmv obj1("Hello ", "Good ");
-	obj1.Display();
-	Cpmv obj2(obj1);
-	obj2.Display();
-	Cpmv obj3(obj0 + Cpmv{"World", "Morning"});
-	obj0 = obj1;
-	obj0.Display();
-	obj2 = obj0 + obj3;
-	obj2.Display();
-	obj2 += Cpmv{ ",", "." };
-	obj2.Display();
+	std::cout << sum_values(0, 2, 41.41, '\t', '\n', 10.98, 14) << std::endl;
 	return 0;
 }
 
