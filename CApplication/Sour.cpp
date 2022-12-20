@@ -24,7 +24,8 @@ int main()
 	etcetera.sort();
 	for_each(yadayada.begin(), yadayada.end(), outint);
 	cout << endl;
-	for_each(etcetera.begin(), etcetera.end(), outint);
+	for (auto &st : etcetera)
+		cout << st << " ";
 	cout << endl;
 	return 0;
 }
