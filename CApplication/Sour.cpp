@@ -1,29 +1,30 @@
 ﻿#include<iostream>
+#include<list>
+#include<iterator>
+#include<algorithm>
 
-long double sum_values()
-{
-	return 0;
-}
-
-template<typename T>
-long double sum_values(T value)
-{
-	static_cast<long double>(value);
-	return value;
-}
-
-template<typename T, typename ... Args>
-long double sum_values(T value, Args...arg)
-{
-	static_cast<long double>(value);
-	return value + sum_values(arg...);
-}
+auto outint = [](int n) { std::cout << n << " "; };
 
 int main()
 {
-	std::cout << sum_values() << std::endl;
-	std::cout << sum_values(1) << std::endl;
-	std::cout << sum_values(0, 2, 41.41, '\t', '\n', 10.98, 14, 'Q') << std::endl;
+	using std::list;
+	using std::cout;
+	using std::endl;
+	int vals[10] = { 50, 100, 90, 180, 60, 210, 415, 88, 188, 201 };
+	list<int> yadayada(vals, vals + 10);
+	list<int> etcetera(vals, vals + 10);
+	cout << "Original list:\n";
+	for_each(yadayada.begin(), yadayada.end(), outint);
+	cout << endl;
+	for_each(etcetera.begin(), etcetera.end(), outint);
+	cout << endl;
+	yadayada.remove_if([](const int & v) { return v > 100; });
+	etcetera.remove_if([](const int& v) { return v > 200; });
+	yadayada.sort();
+	etcetera.sort();
+	for_each(yadayada.begin(), yadayada.end(), outint);
+	cout << endl;
+	for_each(etcetera.begin(), etcetera.end(), outint);
+	cout << endl;
 	return 0;
 }
-
